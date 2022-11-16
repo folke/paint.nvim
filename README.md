@@ -2,7 +2,7 @@
 
 Simple Neovim plugin to easily add additional highlights to your buffers.
 
-See the `@something` comments in the screenshot. Does are not coming from the `comment` **Treesitter** parser.
+See the `@something` comments in the screenshot. Those are not coming from the `comment` **Treesitter** parser.
 
 ![image](https://user-images.githubusercontent.com/292349/202141321-0c501a4f-163a-4a6f-8d0d-0c79d11a05a3.png)
 
