@@ -33,7 +33,6 @@ REQUIREMENTS                                         *paint.nvim-requirements*
 
 
 - Neovim >= 0.8.0
-- **Paint** only works with `colorschemes` that set highlights using `vim.api.nvim_set_hl`
 
 
 INSTALLATION                                         *paint.nvim-installation*
