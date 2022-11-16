@@ -16,7 +16,6 @@ to see `@something` highlighted in Lua comments.
 ## ⚡️ Requirements
 
 - Neovim >= 0.8.0
-- **Paint** only works with `colorschemes` that set highlights using `vim.api.nvim_set_hl`
 
 ## 📦 Installation
 
