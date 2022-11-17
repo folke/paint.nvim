@@ -150,7 +150,7 @@ function M.enable()
 
   local group = vim.api.nvim_create_augroup("paint.nvim", { clear = true })
 
-  vim.api.nvim_create_autocmd({ "BufWinEnter", "WinNew" }, {
+  vim.api.nvim_create_autocmd({ "BufWinEnter", "WinNew", "FileType" }, {
     group = group,
     callback = function(event)
       if #M.get_highlights(event.buf) > 0 then
