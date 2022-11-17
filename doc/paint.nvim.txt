@@ -1,4 +1,4 @@
-*paint.nvim.txt*         For NVIM v0.5.0         Last change: 2022 November 16
+*paint.nvim.txt*         For NVIM v0.5.0         Last change: 2022 November 17
 
 ==============================================================================
 Table of Contents                               *paint.nvim-table-of-contents*
