@@ -9,22 +9,34 @@ M.bufs = {}
 ---@param first? number
 ---@param last? number
 function M.highlight(buf, first, last)
+  if not vim.api.nvim_buf_is_valid(buf) then
+    return
+  end
+
   first = first or 1
   last = last or vim.api.nvim_buf_line_count(buf)
   local lines = vim.api.nvim_buf_get_lines(buf, first - 1, last, false)
 
   vim.api.nvim_buf_clear_namespace(buf, config.ns, first - 1, last - 1)
 
+  local highlights = M.get_highlights(buf)
+
   for l, line in ipairs(lines) do
     local lnum = first + l - 1
 
-    for _, hl in ipairs(M.get_highlights(buf)) do
+    for _, hl in ipairs(highlights) do
       local from, to, match = line:find(hl.pattern)
       if from then
         if match then
           from, to = line:find(match, from)
         end
-        vim.api.nvim_buf_set_extmark(buf, config.ns, lnum - 1, from - 1, { end_col = to, hl_group = hl.hl })
+        vim.api.nvim_buf_set_extmark(
+          buf,
+          config.ns,
+          lnum - 1,
+          from - 1,
+          { end_col = to, hl_group = hl.hl, priority = 110 }
+        )
       end
     end
   end
@@ -65,8 +77,13 @@ function M.attach(buf)
   if M.bufs[buf] then
     return
   end
+  if not (vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_is_loaded(buf)) then
+    return
+  end
+
   M.bufs[buf] = buf
-  vim.api.nvim_buf_attach(buf, false, {
+
+  local ok = vim.api.nvim_buf_attach(buf, false, {
     on_lines = function(_, _, _, first, _, last)
       if not M.bufs[buf] then
         return true
@@ -85,6 +102,9 @@ function M.attach(buf)
       M.detach(buf)
     end,
   })
+  if not ok then
+    error("failed to attach")
+  end
   M.highlight_buf(buf)
 end
 
@@ -130,7 +150,7 @@ function M.enable()
 
   local group = vim.api.nvim_create_augroup("paint.nvim", { clear = true })
 
-  vim.api.nvim_create_autocmd("BufWinEnter", {
+  vim.api.nvim_create_autocmd({ "BufWinEnter", "WinNew" }, {
     group = group,
     callback = function(event)
       if #M.get_highlights(event.buf) > 0 then
@@ -146,12 +166,15 @@ function M.enable()
       end
     end,
   })
-  -- attach to all bufs in visible windows
-  for _, buf in pairs(vim.api.nvim_list_bufs()) do
-    if #M.get_highlights(buf) > 0 then
-      M.attach(buf)
+
+  vim.schedule(function()
+    -- attach to all bufs in visible windows
+    for _, buf in pairs(vim.api.nvim_list_bufs()) do
+      if vim.api.nvim_buf_is_valid(buf) and #M.get_highlights(buf) > 0 then
+        M.attach(buf)
+      end
     end
-  end
+  end)
 end
 
 return M
