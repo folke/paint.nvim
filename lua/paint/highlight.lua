@@ -28,7 +28,7 @@ function M.highlight(buf, first, last)
       local from, to, match = line:find(hl.pattern)
       if from then
         if match then
-          from, to = line:find(match, from)
+          from, to = line:find(match, from, true)
         end
         vim.api.nvim_buf_set_extmark(
           buf,
