@@ -26,10 +26,8 @@ function M.highlight(buf, first, last)
 
     for _, hl in ipairs(highlights) do
       local from, to, match = line:find(hl.pattern)
-      if from then
-        if match then
-          from, to = line:find(match, from, true)
-        end
+      if match then
+        from, to = line:find(match, from, true)
         vim.api.nvim_buf_set_extmark(
           buf,
           config.ns,
