@@ -25,18 +25,30 @@ function M.highlight(buf, first, last)
     local lnum = first + l - 1
 
     for _, hl in ipairs(highlights) do
-      local from, to, match = line:find(hl.pattern)
+      local match = { line:find(hl.pattern) }
+      local from, to, capture = unpack(match)
       if from then
-        if match then
-          from, to = line:find(match, from, true)
+        if capture then
+          for _, next_capture in ipairs(vim.list_slice(match, 3, #(match) + 1)) do
+            from, to = line:find(next_capture, from, true)
+            vim.api.nvim_buf_set_extmark(
+              buf,
+              config.ns,
+              lnum - 1,
+              from - 1,
+              { end_col = to, hl_group = hl.hl, priority = 110 }
+            )
+            from = to
+          end
+        else
+          vim.api.nvim_buf_set_extmark(
+            buf,
+            config.ns,
+            lnum - 1,
+            from - 1,
+            { end_col = to, hl_group = hl.hl, priority = 110 }
+          )
         end
-        vim.api.nvim_buf_set_extmark(
-          buf,
-          config.ns,
-          lnum - 1,
-          from - 1,
-          { end_col = to, hl_group = hl.hl, priority = 110 }
-        )
       end
     end
   end
