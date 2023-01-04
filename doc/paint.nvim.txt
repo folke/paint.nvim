@@ -1,4 +1,4 @@
-*paint.nvim.txt*         For NVIM v0.5.0         Last change: 2022 November 29
+*paint.nvim.txt*        For Neovim >= 0.8.0       Last change: 2023 January 04
 
 ==============================================================================
 Table of Contents                               *paint.nvim-table-of-contents*
@@ -39,7 +39,7 @@ INSTALLATION                                         *paint.nvim-installation*
 
 Install the plugin with your preferred package manager:
 
->
+>lua
     -- Packer
     use({
       "folke/paint.nvim",
