@@ -40,7 +40,7 @@ function M.highlight(buf, first, last)
           { end_col = to, hl_group = hl.hl, priority = 110 }
         )
 
-        last_to = to
+        last_to = to + 1
         from, to = line:find(hl.pattern, last_to)
       end
     end
