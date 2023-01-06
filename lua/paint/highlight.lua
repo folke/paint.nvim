@@ -25,8 +25,10 @@ function M.highlight(buf, first, last)
     local lnum = first + l - 1
 
     for _, hl in ipairs(highlights) do
-      local from, to, match = line:find(hl.pattern)
-      if from then
+      local last_to = 1
+      local from, to, match = line:find(hl.pattern, last_to)
+
+      while from do
         if match then
           from, to = line:find(match, from, true)
         end
@@ -37,6 +39,9 @@ function M.highlight(buf, first, last)
           from - 1,
           { end_col = to, hl_group = hl.hl, priority = 110 }
         )
+
+        last_to = to
+        from, to = line:find(hl.pattern, last_to)
       end
     end
   end
