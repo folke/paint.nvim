@@ -25,8 +25,7 @@ function M.highlight(buf, first, last)
     local lnum = first + l - 1
 
     for _, hl in ipairs(highlights) do
-      local last_to = 1
-      local from, to, match = line:find(hl.pattern, last_to)
+      local from, to, match = line:find(hl.pattern)
 
       while from do
         if match and match ~= "" then
@@ -41,8 +40,7 @@ function M.highlight(buf, first, last)
           { end_col = to, hl_group = hl.hl, priority = 110 }
         )
 
-        last_to = to + 1
-        from, to, match = line:find(hl.pattern, last_to)
+        from, to, match = line:find(hl.pattern, to + 1)
       end
     end
   end
