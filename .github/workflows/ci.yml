@@ -12,4 +12,3 @@ jobs:
     with:
       plugin: paint.nvim
       repo: folke/paint.nvim
-      tests: false
