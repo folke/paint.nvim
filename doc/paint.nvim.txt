@@ -1,4 +1,4 @@
-*paint.nvim.txt*         For Neovim >= 0.8.0        Last change: 2023 March 19
+*paint.nvim.txt*              For Neovim             Last change: 2024 July 06
 
 ==============================================================================
 Table of Contents                               *paint.nvim-table-of-contents*
@@ -7,6 +7,7 @@ Table of Contents                               *paint.nvim-table-of-contents*
   - Why?                                               |paint.nvim-paint-why?|
   - Requirements                               |paint.nvim-paint-requirements|
   - Installation                               |paint.nvim-paint-installation|
+2. Links                                                    |paint.nvim-links|
 
 ==============================================================================
 1. Paint                                                    *paint.nvim-paint*
@@ -28,7 +29,6 @@ still wanted to see `@something` highlighted in Lua comments.
 
 REQUIREMENTS                                   *paint.nvim-paint-requirements*
 
-
 - Neovim >= 0.8.0
 
 
@@ -49,7 +49,7 @@ Install the plugin with your preferred package manager:
               -- or a function called with buf as param that should return true.
               -- The example below will paint @something in comments with Constant
               filter = { filetype = "lua" },
-              pattern = "%s%-%-%-%s(@%w+)",
+              pattern = "%s*%-%-%-%s*(@%w+)",
               hl = "Constant",
             },
           },
