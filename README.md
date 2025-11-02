@@ -36,6 +36,7 @@ use({
           filter = { filetype = "lua" },
           pattern = "%s*%-%-%-%s*(@%w+)",
           hl = "Constant",
+          -- priority = 999, --- optional, default is 110
         },
       },
     })

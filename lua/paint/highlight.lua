@@ -37,7 +37,7 @@ function M.highlight(buf, first, last)
           config.ns,
           lnum - 1,
           from - 1,
-          { end_col = to, hl_group = hl.hl, priority = 110 }
+          { end_col = to, hl_group = hl.hl, priority = hl.priority or 110 }
         )
 
         from, to, match = line:find(hl.pattern, to + 1)

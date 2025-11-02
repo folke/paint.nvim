@@ -10,6 +10,7 @@ M.ns = vim.api.nvim_create_namespace("paint.nvim")
 ---@field filter PaintFilter
 ---@field pattern string
 ---@field hl string
+---@field priority? integer
 
 --- @class PaintOptions
 M.defaults = {
